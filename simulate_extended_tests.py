@@ -31,6 +31,8 @@ SENSITIVITY_SCENARIOS = {
 
 DAYS = 90
 ORDER_MULTIPLE = 3
+REPEATS = 30
+BASE_SEED = 42
 
 
 def poisson(lam: float) -> int:
@@ -73,7 +75,7 @@ def next_multiple_of_3(value: int) -> int:
     return ((value + ORDER_MULTIPLE - 1) // ORDER_MULTIPLE) * ORDER_MULTIPLE
 
 
-def simulate(variant_name: str, variant: dict, daily_demands: list, days: int = DAYS) -> dict:
+def simulate(variant_name: str, variant: dict, daily_demands: list, days: int = DAYS, lead_time_fn=None) -> dict:
     # Tillat floats i min/max ved å runde til nærmeste int ved sammenligning
     inventory = {name: int(maxv) for name, (_, maxv) in variant.items()}
     pending_orders = []
@@ -113,9 +115,10 @@ def simulate(variant_name: str, variant: dict, daily_demands: list, days: int = 
 
             # Sammenlign med float-verdier
             if inventory[product] <= minv:
-                order_qty = next_multiple_of_3(int(maxv - inventory[product]))
+                order_qty = next_multiple_of_3(max(0, math.ceil(maxv - inventory[product])))
                 if order_qty > 0:
-                    arrival = day + lead_time_days()
+                    chosen_lead_time = lead_time_fn if lead_time_fn is not None else lead_time_days
+                    arrival = day + chosen_lead_time()
                     arrival = adjust_for_tuesday(arrival)
                     pending_orders.append((arrival, product, order_qty))
 
@@ -144,6 +147,31 @@ def summarize(metrics: dict) -> dict:
     return summary
 
 
+def run_fixed_lead_time_sensitivity():
+    """Kjør fast lead time-sensitivitetsanalyse."""
+    print("\n\n3. FAST LEAD TIME-SENSITIVITET (1-4 dager)")
+    print("-" * 50)
+    scenario_params = SENSITIVITY_SCENARIOS["Standard"]
+    test_variants = {
+        "Baseline": PRODUCTS,
+        "Variant +1": {name: (minv + 1, maxv + 1) for name, (minv, maxv) in PRODUCTS.items()},
+    }
+
+    for lead_time in [1, 2, 3, 4]:
+        print(f"\n=== Faste lead time {lead_time} dager ===")
+        variant_results = {name: [] for name in test_variants}
+        for repeat in range(REPEATS):
+            random.seed(BASE_SEED + repeat)
+            daily_demands = generate_demand_series(DAYS, scenario_params)
+            for name, variant in test_variants.items():
+                metrics = simulate(name, variant, daily_demands, lead_time_fn=lambda lt=lead_time: lt)
+                variant_results[name].append(summarize(metrics))
+
+        for name, summaries in variant_results.items():
+            stats = aggregate_summaries(summaries)
+            print(f"\n{name}: Tapt {stats['mean_lost']:.1f} ± {stats['std_lost']:.1f}, binding {stats['mean_binding']:.1f} ± {stats['std_binding']:.1f}")
+
+
 def print_report(results: dict):
     header = ["Produkt", "Tom%", "Lav%", "Bind", "Tapt", "Etterspørsel"]
     print("; ".join(header))
@@ -155,10 +183,29 @@ def print_report(results: dict):
         )
 
 
+def average_binding(summary: dict) -> float:
+    return sum(summary[p]["avg_binding"] for p in PRODUCTS) / len(PRODUCTS)
+
+
+def aggregate_summaries(summaries: list) -> dict:
+    values = [summary["total_lost_demand"] for summary in summaries]
+    demand_values = [summary["total_demand"] for summary in summaries]
+    binding_values = [average_binding(summary) for summary in summaries]
+    mean_lost = sum(values) / len(values)
+    mean_binding = sum(binding_values) / len(binding_values)
+    variance_lost = sum((x - mean_lost) ** 2 for x in values) / len(values)
+    variance_binding = sum((x - mean_binding) ** 2 for x in binding_values) / len(binding_values)
+    return {
+        "mean_lost": mean_lost,
+        "std_lost": math.sqrt(variance_lost),
+        "mean_binding": mean_binding,
+        "std_binding": math.sqrt(variance_binding),
+        "mean_demand": sum(demand_values) / len(demand_values),
+    }
+
+
 def run_extended_tests():
     """Kjør utvidede tester med flere scenarier."""
-    random.seed(42)  # For reproduserbarhet
-
     print("=== UTVIDEDE SIMULERINGSTESTER ===\n")
 
     # Test 1: Finere granulering av min-maks nivåer
@@ -166,16 +213,21 @@ def run_extended_tests():
     print("-" * 50)
 
     scenario_params = SENSITIVITY_SCENARIOS["Standard"]
-    daily_demands = generate_demand_series(DAYS, scenario_params)
+    variant_results = {name: [] for name in VARIANTS_EXTENDED}
 
-    for name, variant in VARIANTS_EXTENDED.items():
-        metrics = simulate(name, variant, daily_demands)
-        summary = summarize(metrics)
+    for repeat in range(REPEATS):
+        random.seed(BASE_SEED + repeat)
+        daily_demands = generate_demand_series(DAYS, scenario_params)
+        for name, variant in VARIANTS_EXTENDED.items():
+            metrics = simulate(name, variant, daily_demands)
+            variant_results[name].append(summarize(metrics))
+
+    for name, summaries in variant_results.items():
+        stats = aggregate_summaries(summaries)
         print(f"\n=== {name} ===")
-        print_report(summary)
-        total_lost = summary["total_lost_demand"]
-        total_demand = summary["total_demand"]
-        print(f"Totalt tapt etterspørsel: {total_lost} av {total_demand} ({total_lost/total_demand*100:.1f}%)")
+        print(f"Gjennomsnittlig tapt etterspørsel: {stats['mean_lost']:.1f} ± {stats['std_lost']:.1f}")
+        print(f"Gjennomsnittlig binding: {stats['mean_binding']:.1f} ± {stats['std_binding']:.1f}")
+        print(f"Basert på {REPEATS} repeterte simuleringer")
 
     # Test 2: Sensitivitetsanalyse for etterspørsel
     print("\n\n2. SENSITIVITETSANALYSE")
@@ -183,22 +235,27 @@ def run_extended_tests():
 
     for scenario_name, params in SENSITIVITY_SCENARIOS.items():
         print(f"\n--- {scenario_name} ---")
-        daily_demands = generate_demand_series(DAYS, params)
-
-        # Kjør kun baseline og Variant +1 for hver scenario
         test_variants = {
             "Baseline": PRODUCTS,
             "Variant +1": {name: (minv + 1, maxv + 1) for name, (minv, maxv) in PRODUCTS.items()},
         }
+        variant_results = {name: [] for name in test_variants}
 
-        for name, variant in test_variants.items():
-            metrics = simulate(name, variant, daily_demands)
-            summary = summarize(metrics)
+        for repeat in range(REPEATS):
+            random.seed(BASE_SEED + repeat)
+            daily_demands = generate_demand_series(DAYS, params)
+            for name, variant in test_variants.items():
+                metrics = simulate(name, variant, daily_demands)
+                variant_results[name].append(summarize(metrics))
+
+        for name, summaries in variant_results.items():
+            stats = aggregate_summaries(summaries)
             print(f"\n{name}:")
-            total_lost = summary["total_lost_demand"]
-            total_demand = summary["total_demand"]
-            print(f"  Tapt etterspørsel: {total_lost}/{total_demand} ({total_lost/total_demand*100:.1f}%)")
-            print(f"  Gj.snitt binding: {sum(summary[p]['avg_binding'] for p in PRODUCTS)/len(PRODUCTS):.1f}")
+            print(f"  Tapt etterspørsel: {stats['mean_lost']:.1f} ± {stats['std_lost']:.1f}")
+            print(f"  Gjennomsnittlig binding: {stats['mean_binding']:.1f} ± {stats['std_binding']:.1f}")
+            print(f"  Basert på {REPEATS} repeterte simuleringer")
+
+    run_fixed_lead_time_sensitivity()
 
 
 if __name__ == "__main__":

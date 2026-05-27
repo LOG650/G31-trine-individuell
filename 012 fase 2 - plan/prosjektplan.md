@@ -78,7 +78,7 @@ Forretningscaset bygger på følgende forutsetninger:
 
 - Min–maks styrer automatisk etterfylling, og bestillinger kommer i multipler av 3.
 - Det er ikke varelevering på tirsdager.
-- Total etterfyllingstid fra automatisk bestilling til varen er på hylle er 1–4 døgn og behandles som scenarier i analysen.
+- Total etterfyllingstid fra automatisk bestilling til varen er på hylle er 1–4 døgn. Ledetiden påvirkes av flere faktorer som ordrebehandling, transport, butikkens mottaksprosess, tidspunkt på dagen og bemanning i butikken. Varer kan ankomme flyplassen uten å være hyllklare, og ved høyt trafikkvolum eller redusert bemanning kan det ta opptil 4 dager før varen er på plass i hylla.
 - Etterspørsel representeres ved simulerte daglige uttak med variasjon og enkelte topper.
 - Prosjektet bruker tom-hylle-rate og lav-hylle-rate som proxy for tilgjengelighetsbegrenset salg, og estimerer ikke tapt salg direkte på kundenivå.
 
@@ -121,7 +121,7 @@ Prosjektets forutsetninger er:
 
 Prosjektets begrensninger er:
 
-- Omfanget avgrenses til TRN Ankomst på Oslo Lufthavn og et begrenset varesett innen hudpleie og sminke (for eksempel 20–30 varer).
+- Omfanget avgrenses til TRN Ankomst på Oslo Lufthavn og et begrenset varesett på 7 representative hudpleie- og sminkeprodukter.
 - Prosjektet modellerer ikke kampanjer, prisendringer, planogramendringer eller ny sesongmekanisme.
 - Prosjektet estimerer ikke tapt salg direkte på kundenivå, men bruker tom/lav hylle som proxy.
 - Prosjektet gjennomføres innen tidsrammene i emnet, og planlagt fremdrift styres av Gantt-planen.
@@ -134,7 +134,7 @@ Kravene beskriver hva prosjektet må oppfylle for å anses gjennomført.
 
 - Simuleringsmodellen skal implementere min–maks-etterfylling med bestillingskvant i multipler av 3.
 - Modellen skal håndtere leveringskalender uten mottak på tirsdager.
-- Modellen skal støtte lead time-scenarier fra 1 til 4 døgn.
+- Modellen skal støtte lead time-scenarier fra 1 til 4 døgn, både som stokastisk variasjon og som faste testscenarier for å analysere hvor sensitiv tilgjengeligheten er for konkrete ledetidssituasjoner.
 
 ### Krav til måling og rapportering:
 
@@ -245,7 +245,7 @@ Risiko identifiseres i planleggingsfasen basert på prosjektets avgrensning, ant
 | ID | Risiko | Sannsynlighet | Konsekvens | Tiltak (forebyggende) | Beredskap (hvis det skjer) |
 |---|---|---|---|---|---|
 | R1 | Manglende tilgang til interne data | Høy | Høy | Bruke simulerte data og dokumenterte antakelser. Avgrense varesett og scenarier. | Forenkle etterspørselsmodell og redusere antall varianter/scenarier dersom tidsbruk øker. |
-| R2 | For stort omfang (for mange varer/scenarier/varianter) | Middels | Høy | Holde fast på avgrensning (20–30 varer, tre min–maks-varianter, lead time 1–4). | Redusere til færre varer (f.eks. 10–15) eller færre varianter (f.eks. 2) uten å endre hovedpoenget. |
+| R2 | For stort omfang (for mange varer/scenarier/varianter) | Middels | Høy | Holde fast på avgrensning (7 representative varer, tre min–maks-varianter, lead time 1–4). | Redusere til færre varer eller færre varianter uten å endre hovedpoenget. |
 | R3 | Feil/bug i simuleringen gir misvisende resultater | Middels | Høy | Test på liten dataserie. Sanity checks: min/maks opp → bedre tilgjengelighet, lead time opp → dårligere tilgjengelighet. | Fryse funksjonalitet til en enklere modell (kun min–maks + ett lead time-scenario) for å sikre leverbarhet. |
 | R4 | Urealistisk etterspørselsmodell (simulert data blir “for pen” eller for ekstrem) | Middels | Middels | Bruke minst to etterspørselstyper (normal + spikes). Sjekke nivå/variasjon mot rimelig butikklogikk. | Dokumentere begrensningen tydelig og fokusere på relative effekter mellom policy-varianter. |
 | R5 | Tidsmangel / uforutsette forsinkelser | Høy | Høy | Prioritere fungerende baseline + få varianter. Starte rapport tidlig med fast struktur. | Kutte ekstra analyser og levere minimumsløsning med klare resultater og god dokumentasjon. |
