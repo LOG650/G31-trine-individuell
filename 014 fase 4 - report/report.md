@@ -7,9 +7,9 @@
 
 ## Sammendrag
 
-Dette forskningsprosjektet undersøker hvordan min–maks-parametere påvirker varetilgjengelighet i TRN Ankomst, Oslo Lufthavn. Gjennom en systematisk tilnærming som inkluderer litteraturstudier, problemformulering og kvantitativ simulering viser resultatene at små økninger i min–maks-nivåer kan redusere tom-hylle-rate betydelig, samtidig som lagerbinding holdes innenfor akseptable grenser. Rapporten anbefaler en moderat økning i min–maks-nivåer for å forbedre kundetilfredshet og muliggjøre salgsfremmende tiltak.
+Denne studien undersøker hvordan min–maks-policyer påvirker varetilgjengeligheten ved TRN Ankomst, Oslo Lufthavn. Ved å kombinere faglitteratur og kvantitativ simulering vurderes effektene av alternative min–maks-nivåer på tom-hylle-rate, lav-hylle-rate og lagerbinding. Resultatene peker på at et moderat økt policynivå reduserer tom-hylle-rate betydelig, med en akseptabel økning i gjennomsnittlig lagerbinding. Studien anbefaler å implementere det moderate policyløftet parallelt med tiltak for å redusere tiden fra mottak til salgsklart.
 
-Prosjektet har vært gjennomført i henhold til LOG650s krav til vitenskapelig forskningsrapport, med fokus på praktisk relevans for retail-logistikk og bruk av simulerte data for å unngå konfidensialitetsproblemer.
+Arbeidet er gjennomført i tråd med LOG650s krav til vitenskapelig rapportering, med vekt på metodisk transparens og reproducerbarhet ved bruk av simulerte data.
 
 ## Innledning
 
@@ -69,9 +69,8 @@ Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med ant
 - **Etterspørsel:** Daglig etterspørsel er modellert med Poisson-fordeling fordi denne fordelingen er passende for diskrete, uavhengige hendelser med relativt lav daglig volum. En normal etterspørselsdag bruker λ=3, mens kampanjedager bruker λ=8 for å reflektere midlertidig økt etterspørsel.
 - **Lead time:** Ledetid er først modellert som en stokastisk fordeling med 1–3 dager for å fange opp variasjon i transport, ordrebehandling og intern håndtering. I tillegg er det kjørt faste lead time-scenarier for 1–4 dager for å teste hvordan operasjonelle forskjeller i dag, tidspunkt, bemanning og utpakking påvirker tilgjengeligheten.
 - **Leveringskalender:** Det er forutsatt at levering skjer alle dager unntatt tirsdag, noe som er en relevant begrensning i TRN Ankomsts drift.
-- **Hyllerapiditet:** Modellen skiller mellom ankomst til flyplass og tidspunktet varen er salgs-klar, fordi utpakking og plassering kan forsinke tilgjengeligheten.
+- **Hylleparatitet:** Modellen skiller mellom ankomst til flyplass og tidspunktet varen er salgs-klar (hylleparatitet), fordi utpakking og plassering kan forsinke tilgjengeligheten.
 - **Bestillingsregler:** Ordre kvantiteres i multipler av 3, i tråd med praktiske emballasje- og leveringskrav.
- - **Bestillingsregler:** Ordre kvantiteres i multipler av 3, i tråd med praktiske emballasje- og leveringskrav.
 
 ### Eksplisitte antakelser og hvordan de er vurdert
 For tydelighet og etterprøvbarhet listes her prosjektets sentrale antakelser eksplisitt, sammen med kort hvordan hver antakelse er begrunnet eller testet. Dette bygger på kompendiets anbefalte prosess for metode- og antakelseskontroll (Pettersen & Rekdal, 2026).
@@ -94,7 +93,7 @@ I tråd med kompendiets prosessanbefaling (se avsnitt i.4 i Pettersen & Rekdal, 
 
 Disse tiltakene sikrer at modellens begrensninger er synlige i analysen og at anbefalinger formuleres som relative policy-anbefalinger, slik kompendiet anbefaler for prosjekter uten full tilgang til reelle driftsdata.
 ### Simuleringsmodell
-Simuleringen er implementert i Python som en dagen-for-dagen modell av lagerbeholdning, etterspørsel og bestillingsprosesser. Hovedkomponentene er:
+Simuleringen er implementert i Python som en dag-for-dag modell av lagerbeholdning, etterspørsel og bestillingsprosesser. Hovedkomponentene er:
 
 - beregning av daglig etterspørsel per produkt
 - vurdering av lagerstatus og bestillingsutløsning ved nivå ≤ min
@@ -194,7 +193,7 @@ Den empiriske analysen bekrefter flere sentrale poenger fra inventory theory. EO
 ### Resultatdiskusjon
 Analysen viser tydelige forbedringer i tilgjengelighet ved moderate økninger i min og maks. Variant A reduserer tapt etterspørsel med 8.8 prosentpoeng (34.4 % → 25.6 %) samtidig som gjennomsnittlig lagerbinding øker fra 2.7 til 3.8. Dette gir et bedre forhold mellom service level og kapitalbinding enn en mer aggressiv økning til Variant B, som gir marginale forbedringer i tilgjengelighet med betydelig høyere binding.
 
-Faste lead time-scenarier understreker at ledetid er en viktig operasjonell driver. Effektiv lead time på 1 dag gir klart lavere tapt etterspørsel og lavere binding enn 3–4 dagers ledetid. Dette betyr at for TRN Ankomst er ikke bare bestillingspolicyen viktig, men også tiden det tar fra vare ankommer til den er salgs-klar. Operasjonelle forhold som ukedag, tidspunkt for mottak, sesong og utpakking/bemanning påvirker denne effektive ledetiden.
+Faste lead time-scenarier understreker at ledetid er en viktig operasjonell driver. Effektiv lead time på 1 dag gir klart lavere tapt etterspørsel og lavere binding enn 3–4 dagers ledetid. For TRN Ankomst er ikke bare bestillingspolicy viktig; tiden fra ankomst til salgsklart (hylleparatitet) er også en kritisk styringsvariabel. Operasjonelle forhold som ukedag, tidspunkt for mottak, sesong og utpakking/bemanning påvirker denne effektive ledetiden.
 
 ### Praktiske implikasjoner
 - Redusert tom-hylle-rate kan direkte forbedre kundetilfredshet og kjøpssjanser.
