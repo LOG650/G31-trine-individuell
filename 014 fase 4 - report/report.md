@@ -71,7 +71,28 @@ Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med ant
 - **Leveringskalender:** Det er forutsatt at levering skjer alle dager unntatt tirsdag, noe som er en relevant begrensning i TRN Ankomsts drift.
 - **Hyllerapiditet:** Modellen skiller mellom ankomst til flyplass og tidspunktet varen er salgs-klar, fordi utpakking og plassering kan forsinke tilgjengeligheten.
 - **Bestillingsregler:** Ordre kvantiteres i multipler av 3, i tråd med praktiske emballasje- og leveringskrav.
+ - **Bestillingsregler:** Ordre kvantiteres i multipler av 3, i tråd med praktiske emballasje- og leveringskrav.
 
+### Eksplisitte antakelser og hvordan de er vurdert
+For tydelighet og etterprøvbarhet listes her prosjektets sentrale antakelser eksplisitt, sammen med kort hvordan hver antakelse er begrunnet eller testet. Dette bygger på kompendiets anbefalte prosess for metode- og antakelseskontroll (Pettersen & Rekdal, 2026).
+
+- **Uavhengig daglig etterspørsel (Poisson):** Vi antar at daglig etterspørsel per produkt er uavhengig og tilnærmet Poisson-fordelt. Valget er faglig begrunnet for lave diskrete volum; vi validerer ved visuell sjekk av simulerte frekvensfordelinger og sensitivitetskjøringer mot høyere λ-verdier.
+- **Stokastisk ledetid modellering:** Ledetid antas uavhengig av etterspørsel og følger den spesifiserte diskrete fordelingen (1–3 dager) i hovedscenariet. Vi isolerer ledetidseffekter gjennom faste lead time-scenarier (1–4 dager) for å teste robusthet.
+- **Tapte etterspørselsantagelse (lost sales):** Etterspørsel som ikke kan oppfylles umiddelbart antas tapt (ikke backorder). Dette gir en konservativ måling av tapt salg; alternative antakelser (substitution eller forsinket kjøp) kan vurderes i videre arbeid.
+- **Produkt-uavhengighet:** Produkter modelleres uten kryss-effekter (ingen substitution eller bundling). Dette forenkler tolkning av policyeffekter per produkt, men begrenser overførbarhet i situasjoner med sterk krysseeffekt.
+- **Ingen eksplisitt plassbegrensning:** Modellens struktur inkluderer ikke en eksplisitt kapasitetsbegrensning for fysisk lagerplass. Binding tolkes derfor som gjennomsnitt per produkt, ikke samlet arealkapasitet.
+- **Mottaks- og bemanningsmønster:** Effektiv lead time inkluderer operasjonelle forsinkelser ved utpakking og tidspunkter for bemanning. Disse faktorene er eksplisitt undersøkt i sensitivitetsanalysen for faste lead times.
+
+For hver antakelse henvises det til Appendix A for de eksakte parameterverdiene og koden som ble brukt for validering og sensitivitetskjøringer. Der finnes også en tabell over alle sentrale parametre og hvordan `REPEATS` og `BASE_SEED` er satt for reproduserbarhet.
+
+### Sjekk av antakelser og sensitivitetsstrategi
+I tråd med kompendiets prosessanbefaling (se avsnitt i.4 i Pettersen & Rekdal, 2026) har vi implementert følgende kontroller og sensitivitetsstrategier:
+
+- Kjøring av multiple repeterte simuleringer (30 repeter) for å vurdere resultatstabilitet.
+- Sensitivitetskjøringer for etterspørselsparameter (λ), faste vs. stokastiske ledetider, og alternative policyløft (+1 / +2) for å vurdere robusthet.
+- Enkel grafisk og numerisk sjekk av simulerte etterspørselsfordelinger for å bekrefte at Poisson-tilnærmelsen ikke gir systematiske avvik under de valgte parametrene.
+
+Disse tiltakene sikrer at modellens begrensninger er synlige i analysen og at anbefalinger formuleres som relative policy-anbefalinger, slik kompendiet anbefaler for prosjekter uten full tilgang til reelle driftsdata.
 ### Simuleringsmodell
 Simuleringen er implementert i Python som en dagen-for-dagen modell av lagerbeholdning, etterspørsel og bestillingsprosesser. Hovedkomponentene er:
 
