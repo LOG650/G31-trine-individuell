@@ -165,64 +165,55 @@ Disse resultatene understøtter hovedfunnet om at både lead time og sikkerhetsl
 
 ## Diskusjon
 
-### Teorioppfølging: EOQ og Safety Stock
-Den klassiske EOQ-teorien (Harris, 1913) fokuserer på ordrekostnader og lagringskostnader for å finne økonomisk ordrekvantum. I moderne retail med høyt volum og begrenset lagerplass er derimot **service level-fokus** viktigere enn ren kostnadsminimering (Axsäter, 2015; Zipkin, 2000). Våre resultater bekrefter denne skiften:
+### Teoretisk tolkning
+Den empiriske analysen bekrefter flere sentrale poenger fra inventory theory. EOQ-fundamentet (Harris, 1913) legger vekt på kostnadsbalanse mellom ordre- og lagerhold, men i et retail-miljø med begrenset plass blir service level og kundetilgjengelighet ofte viktigere enn lavest mulig binding (Axsäter, 2015; Zipkin, 2000). Resultatene fra Variant A og Variant B illustrerer denne grunnleggende trade-off-en mellom tilgjengelighet og lagerkostnad.
 
-- En økning i sikkerhetslager (Variant A og B) gir lavere tom-hylle-rate, konsistent med Safety Stock-teorien (Silver *et al.*, 2017)
-- Teorien predikerer at høyere min/max → bedre service level; våre resultater bekrefter dette (tom-hylle-rate: 18.7% → 13.3% → 8.7%)
+Økningen i min-/maks-nivåer reduserer tom-hylle-rate og lav-hylle-rate, noe som er konsistent med Safety Stock-teori (Silver *et al.*, 2017). På samme måte viser funnene at produkter med særlig lave baseline-beholdninger (parfyme og eyeliner) har størst gevinst ved økt policynivå, noe som stemmer med Ciancimino & Lagana (2015) sin analyse av sensitivitet for lav-lagerprodukter.
 
-### Analyse av resultater
-Resultatene viser en klar trade-off mellom tilgjengelighet og lagerbinding, som stammer fra de klassiske lagerstyringsprinsipper (Gasparin & Thenint, 2020):
+### Resultatdiskusjon
+Analysen viser tydelige forbedringer i tilgjengelighet ved moderate økninger i min og maks. Variant A reduserer tapt etterspørsel med 8.8 prosentpoeng (34.4 % → 25.6 %) samtidig som gjennomsnittlig lagerbinding øker fra 2.7 til 3.8. Dette gir et bedre forhold mellom service level og kapitalbinding enn en mer aggressiv økning til Variant B, som gir marginale forbedringer i tilgjengelighet med betydelig høyere binding.
 
-- **Variant A** gir 8.8 prosentpoeng reduksjon i tapt etterspørsel (fra 34.4% til 25.6%) med moderat binding-økning (2.7 → 3.8). Dette er konsistent med litteraturen som viser at små økninger i min/max gir stor service level-forbedring
-- **Variant B** gir ytterligere forbedring (tapt etterspørsel ned til 22.5%), men krever betydelig høyere binding (4.8). Dette reflekterer den økende marginale kostnaden ved svært høy service level
-
-Produkter med svært lave baseline-nivåer viser størst forbedringspotensial. Parfyme og Eyeliner, som opererer med min=1, har baseline tom-hylle-rater på 23.3% og 24.4%, som reduseres til 11.1% og 13.3% i Variant B. Dette stemmer med Ciancimino & Lagana (2015) som dokumenterer at produkter med lave min-verdier er mest sensitive overfor policy-endringer.
+Faste lead time-scenarier understreker at ledetid er en viktig operasjonell driver. Effektiv lead time på 1 dag gir klart lavere tapt etterspørsel og lavere binding enn 3–4 dagers ledetid. Dette betyr at for TRN Ankomst er ikke bare bestillingspolicyen viktig, men også tiden det tar fra vare ankommer til den er salgs-klar. Operasjonelle forhold som ukedag, tidspunkt for mottak, sesong og utpakking/bemanning påvirker denne effektive ledetiden.
 
 ### Praktiske implikasjoner
-- **Kundeservice:** Redusert tom-hylle-rate muliggjør kjøp av ønsket antall produkter
-- **Salgsmuligheter:** Lavere lav-hylle-rate støtter salgsfremmende tiltak
-- **Operasjonell effektivitet:** Moderat binding-økning kan være akseptabel mot økt salg
+- Redusert tom-hylle-rate kan direkte forbedre kundetilfredshet og kjøpssjanser.
+- Lavere lav-hylle-rate gir bedre driftssikkerhet for kampanjer og salgsfremmende tiltak.
+- Kortere effektiv lead time har høy verdi, særlig når leveringskalenderen er begrenset av faste mottaksdager.
 
-### Metodiske betraktninger
-- Simuleringen gir konsistente resultater på tvers av scenarier. Voss *et al.* (2002) bekrefter at case-basert simulering er egnet for komplekse operasjonelle problemer
-- Poisson-fordelt etterspørsel representerer realistisk variasjon for retail-produkter med uforutsigbar etterspørsel (Ciancimino & Lagana, 2015)
-- Lead time-fordeling reflekterer kjente driftsforhold og er modellert basert på TRN Ankomsts operative realiteter
-- 30 gjentatte simuleringer per scenario gir robust estimering av gjennomsnitt og variasjon, noe som reduserer påvirkning av stokastisk noise
+Dette indikerer at en helhetlig forbedring bør omfatte både justering av min-/maks-policyer og tiltak for å redusere tiden fra mottak til hyllesett.
+
+### Metodiske vurderinger
+Simuleringen er bevisst holdt oversiktlig for å balansere transparens og praktisk relevans. Bruken av Poisson-fordeling for daglig etterspørsel er faglig begrunnet for relativt lave og uavhengige salgsarrangementer, og 30 repeterte simuleringer per scenario gir robusthet mot tilfeldige variasjoner.
+
+Samtidig innebærer modellens enkelhet noen svakheter. Modellen har ikke eksplisitt kapasitet på lagringsplass, og den antar enkelt produktfokus uten kryss-effekter mellom produkter. Dette gjør analysen mest relevant for relative policy-sammenligninger, snarere enn som en absolutt prognose for faktisk salgsvolum.
 
 ### Begrensninger og videre forskning
-- **Simulerte data vs. reelle transaksjoner:** Selv om parametrene er basert på fagkunnskap, gir reelle data mer presise estimater. Disney & Towill (2003) dokumenterer at faktiske etterspørsels- og leveringsmønstre kan avvike fra teoretiske modeller
-- **Sesongvariasjoner og kampanjer:** Disse er delvis modellert (20% kampanjedager), men året har ikke innbakt sesongtopper som sommerferie eller julehøytider
-- **Tapt salg estimert som "censored demand":** Reelle kundevalgbeslutninger kan være mer komplekse – en kunde kan velge alternativt produkt eller ikke kjøpe
-- **Overførbarhet:** Resultater er mest direkte overførbare til andre butikker i lufthavner eller terminaler med lignende leveringsbegrensninger og høyt besøksvolum
-- **Videre forskning:** 
-  - Testing med reelle transaksjondata over lengre perioder
-  - Dynamiske min/max-policyer basert på etterspørselsprognose eller maskinlæring
-  - Multi-produkt optimering som vurderer totalt lagerplass som begrensing
-  - Integrering av kampanjeplaner og sesongprognose i simuleringsmodellen
+- **Simulerte data:** Modellens parametere bygger på antakelser og fagkunnskap. Reelle driftsdata ville styrket konklusjonen, særlig for sesongvariasjoner og kampanjetrykk.
+- **Sesong og kampanjer:** Kampanjedager er delvis modellert, men helårsperspektivet mangler ekstreme perioder som sommerferie og julehandel.
+- **Demand censoring:** Tapte etterspørselsberegninger antar at etterspørsel som ikke tilfredsstilles, representerer direkte tap. I praksis kan kunder velge alternative varer eller utsette kjøp.
+- **Overførbarhet:** Funnene er mest direkte anvendelige i lignende flyplass- og terminalmiljøer med begrenset plass og faste mottaksdager.
+
+Videre forskning kan med fordel utforske dynamiske min-/maks-policyer basert på prognoser, multi-produkt optimering med plassbegrensning, og mer avanserte modeller for kundeadferd ved tomme hyller.
 
 ## Konklusjon og anbefalinger
 
 ### Svar på problemstillingen
-Ja. Simuleringen viser at en moderat økning i min og maks gir lavere tom-hylle-rate og lav-hylle-rate, samtidig som lagerbindingen øker moderat. Den mest robuste løsningen er **Variant A (+1 til min og maks)** fordi den gir vesentlig bedre tilgjengelighet uten uforholdsmessig høy binding.
+Ja. Analysen viser at en moderat økning i min og maks gir lavere tom-hylle-rate og lav-hylle-rate med en akseptabel økning i lagerbinding. **Variant A (+1 til min og maks)** fremstår som det mest robuste alternativet fordi den gir betydelig tilgjengelighetsgevinst uten uforholdsmessig økt lagerbinding.
 
 ### Hovedfunn
-Simuleringen viser at dagens min–maks-nivåer fører til betydelig tapt etterspørsel (34.4%). En moderat økning (+1 til min og maks) kan redusere dette til 25.6% med akseptabel binding-økning.
+Daglig min–maks-policy i baseline gir omfattende tapt etterspørsel (34.4 %) på grunn av hyppige tom-hylle-perioder. En moderat løft av min-/maks-nivåene reduserer dette til 25.6 % og bør vurderes som første tiltak.
 
 ### Anbefalinger
-1. **Implementer Variant A** (+1 til min og maks) som første steg for alle 7 produktene. Dette gir 8.8 prosentpoeng forbedring i service level med akseptabel binding-økning og er i tråd med Safety Stock-teorien (Silver *et al.*, 2017)
-2. **Overvåk effekt** på service level og lagerkostnader etter implementering; samle reelle data for validering av simuleringsmodellen
-3. **Vurder Variant B** for høyt-volum produkter (Maskara, Leppepomade) eller ved kampanjer, basert på empirisk observasjon av endret etterspørsel
-4. **Etabler måling** av tom-hylle-rate og lav-hylle-rate som KPI-er, som foreslått i litteraturen (Gasparin & Thenint, 2020)
-5. **Implementer dynamisk justering** basert på sesongmønstre – sommermåneder kan kreve høyere nivåer (overførbarhet til andre sesonger)
+1. **Implementer Variant A** (+1 til min og maks) som første steg for de 7 produktene.
+2. **Overvåk KPI-er:** mål tom-hylle-rate, lav-hylle-rate og lagerbinding for å validere modellen mot faktiske data.
+3. **Vurder Variant B** for produkter med stabilt høyt volum eller ved kampanjefasede varer.
+4. **Fokuser på effektiv lead time:** tiltak som raskere utpakking og mer tilgjengelig bemanning kan gi stor effekt.
+5. **Utvikle dynamisk policy:** bruk data og prognoser til å justere min/max i perioder med høy etterspørsel.
 
-### Bidrag til fagfeltet og overførbarhet
-Prosjektet demonstrerer hvordan kvantitativ simulering kan brukes til å optimalisere lagerstyring i retail når reelle data ikke er tilgjengelig, noe som er relevant for mange små og mellomstore butikker. Metoden er spesielt anvendbar for:
-- **Retail med begrenset lagerplass** (lufthavner, stasjoner, små butikker)
-- **Høyt volum, variabel etterspørsel** (reisesentre, populære produkter)
-- **Leveringsbegrensninger** (innskrenkede mottaksdager, lange lead times)
+### Bidrag og overførbarhet
+Studien viser at kvantitativ simulering kan gi nyttige beslutningsgrunnlag i retail når reelle data er begrenset. Metoden er særlig relevant for butikker med begrenset lagerplass, høyt besøksvolum og faste mottaksdager.
 
-Resultatene fra TRN Ankomst kan direkte overføres til lignende miljøer, og metodologien kan tilpasses andre produktkategorier og butikker. Simuleringsprogrammet kan brukes som beslutningsstøtte for lagerstyringsoptimalisering.
+Resultatene understreker at både min/max-policy og effektiv ledetid må vurderes parallelt for å oppnå en god tjenestenivåbalanse.
 
 ## Referanser
 
