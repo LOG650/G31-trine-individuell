@@ -37,73 +37,72 @@ Forskningsspørsmål:
 
 ## Teoretisk rammeverk
 
-### Min–maks-styring i retail
-Min–maks-styring er en reorder point-metode hvor:
-- Min = Sikkerhetslager + forbruk i lead time
-- Maks = Min + økonomisk ordrekvantum
+Min–maks-styring er et klassisk inventarsystem der hver vare tildeles et minimums- og maksimumsnivå. I denne modellen utløser et lagernivå som er lik eller under min-bestanden en bestilling opp til maks, og modellen styres av en kombinasjon av sikkerhetslager og forventet forbruk i ledetiden. Dette er nært knyttet til teori om reorder points og safety stock, hvor målet er å balansere service level mot lagerkostnader.
 
-I praksis justeres disse basert på erfaring, og de påvirker:
-- **Service level:** Andel av etterspørsel som kan dekkes umiddelbart
-- **Lagerkostnader:** Binding av kapital i beholdning
-- **Ordrefrekvens:** Hyppighet av bestillinger
+I retail er denne balansen særlig tydelig. Lav lagerbinding kan gi reduserte kapitalkostnader, men fører ofte til høy tom-hylle-rate og tapte salg. Høy tilgjengelighet gir bedre service level, men krever mer kapital bundet i lager. Denne trade-off-en er sentral i inventory theory (Axsäter, 2015; Silver *et al.*, 2017) og er et kjernepunkt i denne oppgaven.
 
-### Relevante teorier
-- **Inventory Theory:** Economic Order Quantity (EOQ) og Safety Stock-beregninger
-- **Service Level Management:** Trade-off mellom tilgjengelighet og kostnader
-- **Retail Operations:** Butikkdrift med begrenset plass og høyt volum
+Relevante teorier som begrunner tilnærmingen i dette prosjektet er:
 
-### Litteraturstudie
-Gjennomgang av relevant litteratur viser at:
-- Min–maks er effektiv for stabile produkter, men utfordrende ved variabel etterspørsel (Silver *et al.*, 2017)
-- Service level >95% er vanlig mål i retail, men krever høy lagerbinding (Axsäter, 2015)
-- Simulering er egnet metode når reelle data ikke er tilgjengelig, spesielt innen retail (Baboli *et al.*, 2011; Voss *et al.*, 2002)
-- Retail-miljøer med begrenset lagerplass og høyt volum stiller spesielle krav til balansen mellom tilgjengelighet og binding (Gasparin & Thenint, 2020)
-- Min–maks-policyer må justeres basert på etterspørselskarakteristikker – Poisson-fordelt etterspørsel er en realistisk tilnærming (Ciancimino & Lagana, 2015)
+- **Economic Order Quantity (EOQ):** Gir et teoretisk grunnlag for hvordan bestillingsstørrelser påvirker kostnadene ved lagerhold og ordrebehandling. Selv om EOQ vanligvis forutsetter kontinuerlig etterspørsel, gir prinsippene et nyttig rammeverk for å forstå hvorfor økte min-/maks-nivåer kan redusere service gap.
+- **Safety Stock:** Beskriver hvor mye buffer som trengs for å møte usikkerhet i etterspørsel og ledetid. Økt sikkerhetslager reduserer sannsynligheten for tom-hylle-situasjoner, men øker gjennomsnittlig binding.
+- **Service Level Management:** Retail-studier viser at service level-mål over 95 % ofte krever betydelig lagerbinding, og at riktige policyer må tilpasses produktets etterspørselsprofil (Axsäter, 2015; Gasparin & Thenint, 2020).
+- **Retail Operations:** Mindre butikker med begrenset lagerplass og begrensede mottaksdager må vurdere både fysisk plass og operasjonelle begrensninger som bemanning og utpakkingstid (Ciancimino & Lagana, 2015).
+
+Litteraturgjennomgangen i denne rapporten tar utgangspunkt i at min–maks-policyer fungerer godt for produkter med relativt stabil etterspørsel, men at variabel etterspørsel gir økt risiko for tom-hylle-dager. Silver *et al.* (2017) peker på at min–maks skal ha tilstrekkelig sikkerhetslager for å møte usikkerhet, og Axsäter (2015) dokumenterer at service level møter en stigende lagringskostnadsfunksjon.
+
+Simulering er anerkjent som en relevant metode når reelle operasjonelle data mangler, og spesielt i retail der scenarioanalyse kan gi innsikt i policyvalg uten å påvirke faktisk drift (Baboli *et al.*, 2011; Voss *et al.*, 2002). Basert på dette er en simuleringsmodell valgt for å teste både dagens policy og alternative min–maks-nivåer.
 
 ## Metode
 
 ### Forskningsdesign
-Prosjektet følger en kvantitativ tilnærming med simuleringsbasert eksperimentell design:
+Denne studien har et kvantitativt, eksperimentelt design hvor ulike min–maks-policyer sammenlignes ved hjelp av simulering. Designet er strukturert i fire faser som reflekterer prosjektets egenfaseinndeling:
 
-1. **Problemidentifikasjon** (Fase 1): Utvikling av problemstilling basert på praktisk erfaring
-2. **Planlegging** (Fase 2): Utvikling av prosjektplan, WBS og risikovurdering
-3. **Gjennomføring** (Fase 3): Implementering av simulering og datainnsamling
-4. **Analyse og rapportering** (Fase 4): Resultatanalyse og anbefalinger
+1. Problemidentifikasjon: Formulering av problemstilling basert på TRN Ankomsts operative utfordringer.
+2. Planlegging: Utvikling av prosjektplan, risikovurdering og avgrensning av omfang.
+3. Gjennomføring: Implementering av Python-simulering og innsamling av resultater.
+4. Analyse og rapportering: Tolkning av resultater, diskusjon og anbefalinger.
 
-### Datainnsamling og datagrunnlag
-Siden konfidensielle bedriftsdata ikke var tilgjengelig, ble simulerte data brukt:
+### Datainnsamling og antakelser
+Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med antakelser som er basert på faglitteratur og typiske retail-mønstre.
 
-- **Produkter:** 7 skjønnhetsprodukter med realistiske min–maks-nivåer
-- **Etterspørsel:** Poisson-fordelt (λ=3 normalt, λ=8 ved kampanje)
-- **Lead time:** 1-3 døgn, modellert som en stokastisk fordeling for å fange opp variasjon fra ordrebehandling, transport, butikkens håndtering og tidspunkt på dagen
-- **Faste lead time-scenarier:** 1–4 dager ble også testet som sensitivitetsanalyse for å isolere effekten av effektiv tid til hylla og reflektere dag, tid på dagen, sesong og utpakking/bemanning
-- **Leveringskalender:** Alle dager unntatt tirsdag
-- **Hyllerapiditet:** Varer kan ankomme flyplassen før de er klare for salg, fordi ansatte må pakke ut og plassere dem i hyllene. Ved høyt trafikkvolum eller redusert bemanning kan dette ta flere dager.
-- **Bestillingsregler:** Multipler av 3, automatisk når ≤ min
+- **Produkter:** Sju representative skjønnhetsprodukter er valgt for å balansere analytisk dybde og gjennomførbarhet. Utvalget dekker ulike etterspørselsprofiler fra dagligvarer til mer impulssalg.
+- **Etterspørsel:** Daglig etterspørsel er modellert med Poisson-fordeling fordi denne fordelingen er passende for diskrete, uavhengige hendelser med relativt lav daglig volum. En normal etterspørselsdag bruker λ=3, mens kampanjedager bruker λ=8 for å reflektere midlertidig økt etterspørsel.
+- **Lead time:** Ledetid er først modellert som en stokastisk fordeling med 1–3 dager for å fange opp variasjon i transport, ordrebehandling og intern håndtering. I tillegg er det kjørt faste lead time-scenarier for 1–4 dager for å teste hvordan operasjonelle forskjeller i dag, tidspunkt, bemanning og utpakking påvirker tilgjengeligheten.
+- **Leveringskalender:** Det er forutsatt at levering skjer alle dager unntatt tirsdag, noe som er en relevant begrensning i TRN Ankomsts drift.
+- **Hyllerapiditet:** Modellen skiller mellom ankomst til flyplass og tidspunktet varen er salgs-klar, fordi utpakking og plassering kan forsinke tilgjengeligheten.
+- **Bestillingsregler:** Ordre kvantiteres i multipler av 3, i tråd med praktiske emballasje- og leveringskrav.
 
 ### Simuleringsmodell
-Python-basert diskret-hendelses-simulering som modellerer:
-- Daglig etterspørsel og lagerbevegelser
-- Bestillingsutløsning og leveringsforsinkelser
-- KPI-beregning per produkt og totalt
+Simuleringen er implementert i Python som en dagen-for-dagen modell av lagerbeholdning, etterspørsel og bestillingsprosesser. Hovedkomponentene er:
+
+- beregning av daglig etterspørsel per produkt
+- vurdering av lagerstatus og bestillingsutløsning ved nivå ≤ min
+- modellering av leveringstid og mottak
+- måling av KPI-er per produkt og totalt
+
+Modellen er holdt relativt enkel for å sikre transparens og forståelighet, samtidig som den fanger de viktigste operasjonelle drivkreftene i TRN Ankomst.
 
 ### Testede scenarier
-- **Baseline:** Dagens min–maks-nivåer
-- **Variant A:** +1 til min og maks
-- **Variant B:** +2 til min og maks
+Tre policyvarianter utgjør kjernen i analysen:
 
-I tillegg er ledetiden modellert som en sannsynlighetsfordeling, fordi flere faktorer kan påvirke hvor lang tid det tar fra bestilling til vare er på hyllen. Det er ikke nok at varen ankommer flyplassen, den må også pakkes ut og settes på plass i hylla. Dette gir en mer realistisk refleksjon av operative variasjoner enn en fast ledetidsantakelse.
+- Baseline: Dagens min–maks-nivåer
+- Variant A: +1 på både min og maks
+- Variant B: +2 på både min og maks
 
-### KPI-er og målemetoder
-- **Tom-hylle-rate:** % dager med 0 stk
-- **Lav-hylle-rate:** % dager med <2 stk
-- **Gjennomsnittlig binding:** Gj.snitt beholdning
-- **Tapt etterspørsel:** Totalt antall usolgte enheter
+Denne komparative tilnærmingen gjør det mulig å vurdere de marginale effektene av økt sikkerhetslager og større bestillingsintervaller.
+
+### KPI-er
+De valgte måleparametrene følger retail-litteraturens standarder for tilgjengelighet og binding:
+
+- Tom-hylle-rate: Andel dager med 0 enheter på lager
+- Lav-hylle-rate: Andel dager med mindre enn 2 enheter på lager
+- Gjennomsnittlig binding: Gjennomsnittlig beholdning over perioden
+- Tapt etterspørsel: Summen av etterspørsel som ikke kunne tilfredsstilles
 
 ### Validitet og reliabilitet
-- **Interne validitet:** Samme etterspørselsserie for alle scenarier
-- **Eksterne validitet:** Parametere basert på kjent drift; resultater er overførbare til andre retail-miljøer med lignende etterspørselsmønster og leveringsbegrensninger
-- **Reliabilitet:** Deterministisk random seed for reproduserbarhet; 30 gjentatte simuleringer per scenario reduserer stokastisk variasjon
+For å styrke intern validitet er samme etterspørselsscenario brukt for alle policyer, og deterministisk initialisering av random seed gir reproduserbare resultater. Reliabilitet er forbedret gjennom 30 gjentatte simuleringer per scenario, noe som reduserer effekten av tilfeldig støy.
+
+Ekstern validitet er begrenset av at modellen opererer på simulerte data og et avgrenset produktutvalg. Likevel er parametrene valgt for å være representative for retail-miljøer med begrenset lagerplass og mottaksdager. Rapportens funn er dermed mest pålitelige som relative effekter mellom policyer, snarere enn som absolutt prognose for TRN Ankomst.
 
 ### Etiske hensyn
 Prosjektet benytter utelukkende simulerte data uten innsamling, lagring eller bruk av persondata. Det stilles derfor ingen særlige etiske krav fra personvern-perspektiv. Simuleringen er designet for å reflektere realistiske driftsforhold basert på fagkunnskap, og resultatene kan fritt deles og implementeres uten konfidensialitetsrisiko.
