@@ -204,6 +204,9 @@ Produkter med svært lave baseline-nivåer viser størst forbedringspotensial. P
 
 ## Konklusjon og anbefalinger
 
+### Svar på problemstillingen
+Ja. Simuleringen viser at en moderat økning i min og maks gir lavere tom-hylle-rate og lav-hylle-rate, samtidig som lagerbindingen øker moderat. Den mest robuste løsningen er **Variant A (+1 til min og maks)** fordi den gir vesentlig bedre tilgjengelighet uten uforholdsmessig høy binding.
+
 ### Hovedfunn
 Simuleringen viser at dagens min–maks-nivåer fører til betydelig tapt etterspørsel (34.4%). En moderat økning (+1 til min og maks) kan redusere dette til 25.6% med akseptabel binding-økning.
 
