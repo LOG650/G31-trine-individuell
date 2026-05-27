@@ -215,6 +215,25 @@ Studien viser at kvantitativ simulering kan gi nyttige beslutningsgrunnlag i ret
 
 Resultatene understreker at både min/max-policy og effektiv ledetid må vurderes parallelt for å oppnå en god tjenestenivåbalanse.
 
+## Appendiks A: Reproduserbarhet og kjøring av simulering
+Koden som ligger i prosjektmappen kan kjøres for å gjenskape simuleringene og statistikkene som presenteres i denne rapporten. Nedenfor er korte instruksjoner for reproduksjon og en forklaring av viktige variabler.
+
+- Systemkrav: Python 3.8+ (ingen tredjepartsbiblioteker nødvendig).
+- Kjøring (fra prosjektrot):
+
+```bash
+py simulate_extended_tests.py
+```
+
+- Beskrivelse: Scriptet kjører flere repeterte simuleringer for hvert scenario, aggregerer resultater og skriver dem til konsoll. Hovedinnstillinger finnes i toppen av `simulate_extended_tests.py`:
+	- `REPEATS`: antall repeterte simuleringer
+	- `PRODUCTS`: produktspesifikasjoner (min, maks)
+	- `SENSITIVITY_SCENARIOS`: etterspørselsparametre for sensitivitetsanalyser
+
+- Reproduserbarhet: scriptet bruker en deterministisk seed (`BASE_SEED`) kombinert med `REPEATS` for å sikre reproduserbare kjøringer.
+
+Jeg kan også legge til en `README.md` i prosjektroten med disse instruksjonene hvis du ønsker.
+
 ## Referanser
 
 Axsäter, S. (2015). *Inventory control* (3rd ed.). Springer. https://doi.org/10.1007/978-3-319-15729-0
