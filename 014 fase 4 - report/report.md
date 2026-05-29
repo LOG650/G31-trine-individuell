@@ -134,6 +134,8 @@ Prosjektet benytter utelukkende simulerte data uten innsamling, lagring eller br
 ### Simuleringsresultater
 
 #### Oversikt over scenarier
+Tabellen under oppsummerer de aggregerte resultatene for hver policyvariant. Den viser hvordan tom-hylle-rate, lav-hylle-rate og gjennomsnittlig lagerbinding endrer seg når min–maks-nivåene heves.
+
 | Scenario | Gj.snitt tom-hylle-rate | Gj.snitt lav-hylle-rate | Gj.snitt binding | Total tapt etterspørsel |
 |----------|------------------------|-------------------------|------------------|-------------------------|
 | Baseline | 18.7% | 22.4% | 2.7 | 867 av 2519 (34.4%) |
@@ -151,6 +153,7 @@ For å teste robustheten i resultatene ble det kjørt en egen sensitivitetsanaly
 Disse resultatene understøtter hovedfunnet om at både ledetid og sikkerhetslager er kritiske drivere for tilgjengelighet. De operasjonelle årsakene bak variable ledetider inkluderer tid på dagen for ankomst, ukedag, sesongpress, bemanning og utpakkingstid.
 
 #### Detaljerte resultater per produkt
+Denne tabellen gir et produktspesifikt bilde av baseline-situasjonen. Den viser hvilke varer som har høyest tom-hylle-rate og hvor mye binding hver vare krever i dagens policy.
 
 ##### Baseline
 | Produkt | Tom% | Lav% | Binding | Tapt | Etterspørsel |
@@ -164,6 +167,8 @@ Disse resultatene understøtter hovedfunnet om at både ledetid og sikkerhetslag
 | Leppepomade | 11.1 | 16.7 | 3.4 | 72 | 337 |
 
 ##### Variant A (+1 til min–maks-nivåene)
+Denne tabellen viser hvordan en moderat økning i min–maks-nivåene påvirker hvert produkt. Den tydeliggjør hvilke varer som drar størst nytte av et mindre policyløft.
+
 | Produkt | Tom% | Lav% | Binding | Tapt | Etterspørsel |
 |---------|------|------|---------|------|--------------|
 | Maskara | 11.1 | 16.7 | 3.5 | 105 | 408 |
@@ -175,6 +180,8 @@ Disse resultatene understøtter hovedfunnet om at både ledetid og sikkerhetslag
 | Leppepomade | 10.0 | 13.3 | 5.1 | 62 | 337 |
 
 ##### Variant B (+2 til min–maks-nivåene)
+Denne tabellen viser hvordan en mer markant økning i min–maks-nivåene påvirker hvert produkt. Den gir innsikt i hvilke produkter som får størst forbedring i tilgjengelighet, og hvilke som krever mest ekstra binding.
+
 | Produkt | Tom% | Lav% | Binding | Tapt | Etterspørsel |
 |---------|------|------|---------|------|--------------|
 | Maskara | 5.6 | 8.9 | 6.7 | 94 | 408 |
