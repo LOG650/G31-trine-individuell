@@ -63,7 +63,7 @@ Denne studien har et kvantitativt, eksperimentelt design hvor ulike min–maks-p
 4. Analyse og rapportering: Tolkning av resultater, diskusjon og anbefalinger.
 
 ### Datainnsamling og antakelser
-Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med antakelser som er basert på faglitteratur og typiske retail-mønstre.
+Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med antakelser som er basert på faglitteratur, typiske retail-mønstre og erfaring fra arbeid ved TRN Ankomst. Selv om tallene ikke er faktiske, er de utformet for å være realistiske og relevante for butikkens drift.
 
 - **Produkter:** Sju representative skjønnhetsprodukter er valgt for å balansere analytisk dybde og gjennomførbarhet. Utvalget dekker ulike etterspørselsprofiler fra dagligvarer til mer impulssalg.
 - **Etterspørsel:** Daglig etterspørsel er modellert med Poisson-fordeling fordi denne fordelingen er passende for diskrete, uavhengige hendelser med relativt lav daglig volum. En normal etterspørselsdag bruker λ=3, mens kampanjedager bruker λ=8 for å reflektere midlertidig økt etterspørsel.
