@@ -16,7 +16,9 @@ Arbeidet er gjennomført i tråd med LOG650s krav til vitenskapelig rapportering
 ### Bakgrunn og kontekst
 I retail-sektoren er lagerstyring en kritisk suksessfaktor for kundetilfredshet og lønnsomhet. Min–maks-styring er en vanlig metode for automatisk etterfylling, hvor nye bestillinger utløses når beholdning faller under et minimumsnivå, og påfyll skjer opp til et maksimumsnivå. I praksis balanseres dette mot leveringstider, etterspørselsvariasjoner og lagerkostnader.
 
-TRN Ankomst på Oslo Lufthavn representerer et spesielt case: høyt trafikkvolum med varierende etterspørsel, begrenset lagringskapasitet, og leveringsrestriksjoner (ingen mottak på tirsdager). Butikken opererer med svært lave min–maks-nivåer for å minimere lagerbinding, men dette fører til hyppige tom-hylle-situasjoner som påvirker kundeopplevelsen negativt.
+Travel Retail Norway (TRN) opererer flere butikker på norske flyplasser og i terminaler. TRN Ankomst på Oslo Lufthavn representerer et særskilt case med særlige operasjonelle utfordringer: høyt trafikkvolum av varierende etterspørsel og faste leveringsrestriksjoner (ingen varemottak på tirsdager). Bestillinger kvantiteres i multipler av 3 etter standardiserte pakninger, og den totale etterfyllingstiden fra automatisk bestillingsutløsning til vare er salgsklart ligger normalt mellom 1 og 4 dager avhengig av dag i uken, tidspunkt og intern håndtering.
+
+Butikken opererer i dag med svært lave min–maks-nivåer primært for å minimere kapitalbinding i lager. Dette er en bevisst økonomisk strategi, men fører til hyppige tom-hylle-situasjoner. Slike situasjoner påvirker kundeopplevelsen negativt, reduserer muligheten for spontankjøp, og kan resultere i tapt salg. Balansen mellom tilgjengelighet og lagerkostnader utgjør derfor en kritisk beslutningsproblem for TRN Ankomst.
 
 ### Problemstilling
 Hvilke min–maks-parametere gir lavest tom-hylle-rate og lav-hylle-rate for utvalgte skjønnhetsprodukter i TRN Ankomst, og hva er konsekvensen av alternative min–maks-nivåer for lagerbinding?
@@ -46,7 +48,7 @@ Relevante teorier som begrunner tilnærmingen i dette prosjektet er:
 - **Economic Order Quantity (EOQ):** Gir et teoretisk grunnlag for hvordan bestillingsstørrelser påvirker kostnadene ved lagerhold og ordrebehandling. Selv om EOQ vanligvis forutsetter kontinuerlig etterspørsel, gir prinsippene et nyttig rammeverk for å forstå hvorfor økte min–maks-nivåer kan redusere service gap.
 - **Safety Stock:** Beskriver hvor mye buffer som trengs for å møte usikkerhet i etterspørsel og ledetid. Økt sikkerhetslager reduserer sannsynligheten for tom-hylle-situasjoner, men øker gjennomsnittlig binding.
 - **Service Level Management:** Retail-studier viser at service level-mål over 95 % ofte krever betydelig lagerbinding, og at riktige policyer må tilpasses produktets etterspørselsprofil (Axsäter, 2015; Gasparin & Thenint, 2020).
-- **Retail Operations:** Mindre butikker med begrenset lagerplass og begrensede mottaksdager må vurdere både fysisk plass og operasjonelle begrensninger som bemanning og utpakkingstid (Ciancimino & Lagana, 2015).
+- **Retail Operations:** Butikker i lufthavnsmiljøer og terminaler må vurdere min–maks-policyer under operasjonelle begrensninger som begrenset mottaksdager, variabel bemanning og utpakkingstid, samtidig som de balanserer tilgjengelighet mot kapitalbinding (Ciancimino & Lagana, 2015).
 
 Litteraturgjennomgangen i denne rapporten tar utgangspunkt i at min–maks-policyer fungerer godt for produkter med relativt stabil etterspørsel, men at variabel etterspørsel gir økt risiko for tom-hylle-dager. Silver *et al.* (2017) peker på at min–maks skal ha tilstrekkelig sikkerhetslager for å møte usikkerhet, og Axsäter (2015) dokumenterer at service level møter en stigende lagringskostnadsfunksjon.
 
@@ -122,7 +124,7 @@ De valgte måleparametrene følger retail-litteraturens standarder for tilgjenge
 ### Validitet og reliabilitet
 For å styrke intern validitet er samme etterspørselsscenario brukt for alle policyer, og deterministisk initialisering av random seed gir reproduserbare resultater. Reliabilitet er forbedret gjennom 30 gjentatte simuleringer per scenario, noe som reduserer effekten av tilfeldig støy.
 
-Ekstern validitet er begrenset av at modellen opererer på simulerte data og et avgrenset produktutvalg. Likevel er parametrene valgt for å være representative for retail-miljøer med begrenset lagerplass og mottaksdager. Rapportens funn er dermed mest pålitelige som relative effekter mellom policyer, snarere enn som absolutt prognose for TRN Ankomst.
+Ekstern validitet er begrenset av at modellen opererer på simulerte data og et avgrenset produktutvalg. Likevel er parametrene valgt for å være representative for retail-miljøer med høyt trafikkvolum, variert etterspørsel, og økonomiske prioriteringer omkring lagerbinding. Rapportens funn er dermed mest pålitelige som relative effekter mellom policyer, snarere enn som absolutt prognose for TRN Ankomst.
 
 ### Etiske hensyn
 Prosjektet benytter utelukkende simulerte data uten innsamling, lagring eller bruk av persondata. Det stilles derfor ingen særlige etiske krav fra personvern-perspektiv. Simuleringen er designet for å reflektere realistiske driftsforhold basert på fagkunnskap, og resultatene kan fritt deles og implementeres uten konfidensialitetsrisiko.
@@ -186,7 +188,7 @@ Disse resultatene understøtter hovedfunnet om at både ledetid og sikkerhetslag
 ## Diskusjon
 
 ### Teoretisk tolkning
-Den empiriske analysen bekrefter flere sentrale poenger fra inventory theory. EOQ-fundamentet (Harris, 1913) legger vekt på kostnadsbalanse mellom ordre- og lagerhold, men i et retail-miljø med begrenset plass blir service level og kundetilgjengelighet ofte viktigere enn lavest mulig binding (Axsäter, 2015; Zipkin, 2000). Resultatene fra Variant A og Variant B illustrerer denne grunnleggende trade-off-en mellom tilgjengelighet og lagerkostnad.
+Den empiriske analysen bekrefter flere sentrale poenger fra inventory theory. EOQ-fundamentet (Harris, 1913) legger vekt på kostnadsbalanse mellom ordre- og lagerhold. I praksis må retailbutikker balansere service level og kundetilgjengelighet mot kapitalbinding i lager—en trade-off som ikke nødvendigvis skyldes fysisk plass, men snarere økonomiske prioriteringer og kapitaltildeling. Resultatene fra Variant A og Variant B illustrerer denne grunnleggende trade-off-en mellom tilgjengelighet og lagerkostnad, som er sentralt for TRN Ankomsts strategiske valg.
 
 Økningen i min–maks-nivåer reduserer tom-hylle-rate og lav-hylle-rate, noe som er konsistent med Safety Stock-teori (Silver *et al.*, 2017). På samme måte viser funnene at produkter med særlig lave baseline-beholdninger (parfyme og eyeliner) har størst gevinst ved økt policynivå, noe som stemmer med Ciancimino & Lagana (2015) sin analyse av sensitivitet for lav-lagerprodukter.
 
@@ -217,7 +219,7 @@ Samtidig innebærer modellens enkelhet noen svakheter. Modellen har ikke eksplis
 - **Simulerte data:** Modellens parametere bygger på antakelser og fagkunnskap. Reelle driftsdata ville styrket konklusjonen, særlig for sesongvariasjoner og kampanjetrykk.
 - **Sesong og kampanjer:** Kampanjedager er delvis modellert, men helårsperspektivet mangler ekstreme perioder som sommerferie og julehandel.
 - **Demand censoring:** Tapte etterspørselsberegninger antar at etterspørsel som ikke tilfredsstilles, representerer direkte tap. I praksis kan kunder velge alternative varer eller utsette kjøp.
-- **Overførbarhet:** Funnene er mest direkte anvendelige i lignende flyplass- og terminalmiljøer med begrenset plass og faste mottaksdager.
+- **Overførbarhet:** Funnene er mest direkte anvendelige i lignende flyplass- og terminalmiljøer med høyt trafikkvolum, variert etterspørsel og faste mottaksdager, der økonomiske prioriteringer påvirker min–maks-policyer.
 - **Offentlige trafikkdata som eksempel:** Et konkret eksempel på videre forskning er å koble min–maks-anbefalingene til offentlig tilgjengelige reisetall, for eksempel SSB eller Avinor. Selv en enkel anslagsvis kobling mellom passasjervolum og sannsynligheten for gjensalg i terminalen kan gi mer operasjonell kontekst og gjøre anbefalingene mer relevante uten å kreve detaljert bedriftsdata.
 
 Videre forskning kan med fordel utforske dynamiske min–maks-policyer basert på prognoser, multi-produkt optimering med plassbegrensning, og mer avanserte modeller for kundeadferd ved tomme hyller.
@@ -239,7 +241,7 @@ Daglig min–maks-policy i baseline gir omfattende tapt etterspørsel (34.4 %) p
 5. **Utvikle dynamisk policy:** bruk data og prognoser til å justere min–maks-nivåene i perioder med høy etterspørsel.
 
 ### Bidrag og overførbarhet
-Studien viser at kvantitativ simulering kan gi nyttige beslutningsgrunnlag i retail når reelle data er begrenset. Metoden er særlig relevant for butikker med begrenset lagerplass, høyt besøksvolum og faste mottaksdager.
+Studien viser at kvantitativ simulering kan gi nyttige beslutningsgrunnlag i retail når reelle data er begrenset. Metoden er særlig relevant for butikker med høyt besøksvolum, variert etterspørsel, faste mottaksdager, og der økonomisk balanse mellom tilgjengelighet og kapitalbinding er en sentral beslutning.
 
 Selv med et avgrenset produktutvalg og simulerte parametere gir analysen konkrete, relative anbefalinger som kan støtte forbedringer i TRN Ankomst. Bruken av prosentvis endring i gjennomsnittlig lagerbinding som kostnadsproxy gjør det mulig å beskrive trade-off uten tilgang til detaljerte kostnadstall.
 
