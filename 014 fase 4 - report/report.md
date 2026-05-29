@@ -3,7 +3,7 @@
 **Forfatter:** Trine Østengen  
 **Dato:** April 2026  
 **Emne:** LOG650 Forskningsprosjekt  
-**Oppdragsgiver:** Høgskulen på Vestlandet  
+**Oppdragsgiver:** Høgskolen i Molde  
 
 ## Sammendrag
 
@@ -43,7 +43,7 @@ I retail er denne balansen særlig tydelig. Lav lagerbinding kan gi reduserte ka
 
 Relevante teorier som begrunner tilnærmingen i dette prosjektet er:
 
-- **Economic Order Quantity (EOQ):** Gir et teoretisk grunnlag for hvordan bestillingsstørrelser påvirker kostnadene ved lagerhold og ordrebehandling. Selv om EOQ vanligvis forutsetter kontinuerlig etterspørsel, gir prinsippene et nyttig rammeverk for å forstå hvorfor økte min-/maks-nivåer kan redusere service gap.
+- **Economic Order Quantity (EOQ):** Gir et teoretisk grunnlag for hvordan bestillingsstørrelser påvirker kostnadene ved lagerhold og ordrebehandling. Selv om EOQ vanligvis forutsetter kontinuerlig etterspørsel, gir prinsippene et nyttig rammeverk for å forstå hvorfor økte min–maks-nivåer kan redusere service gap.
 - **Safety Stock:** Beskriver hvor mye buffer som trengs for å møte usikkerhet i etterspørsel og ledetid. Økt sikkerhetslager reduserer sannsynligheten for tom-hylle-situasjoner, men øker gjennomsnittlig binding.
 - **Service Level Management:** Retail-studier viser at service level-mål over 95 % ofte krever betydelig lagerbinding, og at riktige policyer må tilpasses produktets etterspørselsprofil (Axsäter, 2015; Gasparin & Thenint, 2020).
 - **Retail Operations:** Mindre butikker med begrenset lagerplass og begrensede mottaksdager må vurdere både fysisk plass og operasjonelle begrensninger som bemanning og utpakkingstid (Ciancimino & Lagana, 2015).
@@ -67,7 +67,7 @@ Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med ant
 
 - **Produkter:** Sju representative skjønnhetsprodukter er valgt for å balansere analytisk dybde og gjennomførbarhet. Utvalget dekker ulike etterspørselsprofiler fra dagligvarer til mer impulssalg.
 - **Etterspørsel:** Daglig etterspørsel er modellert med Poisson-fordeling fordi denne fordelingen er passende for diskrete, uavhengige hendelser med relativt lav daglig volum. En normal etterspørselsdag bruker λ=3, mens kampanjedager bruker λ=8 for å reflektere midlertidig økt etterspørsel.
-- **Lead time:** Ledetid er først modellert som en stokastisk fordeling med 1–3 dager for å fange opp variasjon i transport, ordrebehandling og intern håndtering. I tillegg er det kjørt faste lead time-scenarier for 1–4 dager for å teste hvordan operasjonelle forskjeller i dag, tidspunkt, bemanning og utpakking påvirker tilgjengeligheten.
+- **Ledetid (lead time):** Ledetid er først modellert som en stokastisk fordeling med 1–3 dager for å fange opp variasjon i transport, ordrebehandling og intern håndtering. I tillegg er det kjørt faste ledetid-scenarier for 1–4 dager for å teste hvordan operasjonelle forskjeller i dag, tidspunkt, bemanning og utpakking påvirker tilgjengeligheten.
 - **Leveringskalender:** Det er forutsatt at levering skjer alle dager unntatt tirsdag, noe som er en relevant begrensning i TRN Ankomsts drift.
 - **Hylleparatitet:** Modellen skiller mellom ankomst til flyplass og tidspunktet varen er salgs-klar (hylleparatitet), fordi utpakking og plassering kan forsinke tilgjengeligheten.
 - **Bestillingsregler:** Ordre kvantiteres i multipler av 3, i tråd med praktiske emballasje- og leveringskrav.
@@ -76,11 +76,11 @@ Uten tilgang til konfidensielle bedriftsdata er det brukt simulerte data med ant
 For tydelighet og etterprøvbarhet listes her prosjektets sentrale antakelser eksplisitt, sammen med kort hvordan hver antakelse er begrunnet eller testet. Dette bygger på kompendiets anbefalte prosess for metode- og antakelseskontroll (Pettersen & Rekdal, 2026).
 
 - **Uavhengig daglig etterspørsel (Poisson):** Vi antar at daglig etterspørsel per produkt er uavhengig og tilnærmet Poisson-fordelt. Valget er faglig begrunnet for lave diskrete volum; vi validerer ved visuell sjekk av simulerte frekvensfordelinger og sensitivitetskjøringer mot høyere λ-verdier.
-- **Stokastisk ledetid modellering:** Ledetid antas uavhengig av etterspørsel og følger den spesifiserte diskrete fordelingen (1–3 dager) i hovedscenariet. Vi isolerer ledetidseffekter gjennom faste lead time-scenarier (1–4 dager) for å teste robusthet.
+- **Stokastisk ledetid modellering:** Ledetid antas uavhengig av etterspørsel og følger den spesifiserte diskrete fordelingen (1–3 dager) i hovedscenariet. Vi isolerer ledetidseffekter gjennom faste ledetid-scenarier (1–4 dager) for å teste robusthet.
 - **Tapte etterspørselsantagelse (lost sales):** Etterspørsel som ikke kan oppfylles umiddelbart antas tapt (ikke backorder). Dette gir en konservativ måling av tapt salg; alternative antakelser (substitution eller forsinket kjøp) kan vurderes i videre arbeid.
 - **Produkt-uavhengighet:** Produkter modelleres uten kryss-effekter (ingen substitution eller bundling). Dette forenkler tolkning av policyeffekter per produkt, men begrenser overførbarhet i situasjoner med sterk krysseeffekt.
 - **Ingen eksplisitt plassbegrensning:** Modellens struktur inkluderer ikke en eksplisitt kapasitetsbegrensning for fysisk lagerplass. Binding tolkes derfor som gjennomsnitt per produkt, ikke samlet arealkapasitet.
-- **Mottaks- og bemanningsmønster:** Effektiv lead time inkluderer operasjonelle forsinkelser ved utpakking og tidspunkter for bemanning. Disse faktorene er eksplisitt undersøkt i sensitivitetsanalysen for faste lead times.
+- **Mottaks- og bemanningsmønster:** Effektiv ledetid inkluderer operasjonelle forsinkelser ved utpakking og tidspunkter for bemanning. Disse faktorene er eksplisitt undersøkt i sensitivitetsanalysen for faste ledetider.
 
 For hver antakelse henvises det til Appendix A for de eksakte parameterverdiene og koden som ble brukt for validering og sensitivitetskjøringer. Der finnes også en tabell over alle sentrale parametre og hvordan `REPEATS` og `BASE_SEED` er satt for reproduserbarhet.
 
@@ -106,8 +106,8 @@ Modellen er holdt relativt enkel for å sikre transparens og forståelighet, sam
 Tre policyvarianter utgjør kjernen i analysen:
 
 - Baseline: Dagens min–maks-nivåer
-- Variant A: +1 på både min og maks
-- Variant B: +2 på både min og maks
+- Variant A: +1 på både min–maks-nivåene
+- Variant B: +2 på både min–maks-nivåene
 
 Denne komparative tilnærmingen gjør det mulig å vurdere de marginale effektene av økt sikkerhetslager og større bestillingsintervaller.
 
@@ -138,15 +138,15 @@ Prosjektet benytter utelukkende simulerte data uten innsamling, lagring eller br
 | Variant A | 13.3% | 16.2% | 3.8 | 644 av 2519 (25.6%) |
 | Variant B | 8.7% | 11.5% | 4.8 | 567 av 2519 (22.5%) |
 
-#### Sensitivitetsanalyse av faste lead times
-For å teste robustheten i resultatene ble det kjørt en egen sensitivitetsanalyse med faste lead times på 1–4 dager. Dette reflekterer at en vare kan ankomme flyplassen, men likevel først være salgs-klar etter utpakking, oppbygging og tidspunktsbestemte bemanningsforhold. Denne analysen viser at kortere effektiv lead time gir betydelig bedre tilgjengelighet, og understreker at operasjonelle faktorer som dag i uken, tidspunkt og bemanningsnivå er viktige for TRN Ankomst.
+#### Sensitivitetsanalyse av faste ledetider
+For å teste robustheten i resultatene ble det kjørt en egen sensitivitetsanalyse med faste ledetider på 1–4 dager. Dette reflekterer at en vare kan ankomme flyplassen, men likevel først være salgs-klar etter utpakking, oppbygging og tidspunktsbestemte bemanningsforhold. Denne analysen viser at kortere effektiv ledetid gir betydelig bedre tilgjengelighet, og understreker at operasjonelle faktorer som dag i uken, tidspunkt og bemanningsnivå er viktige for TRN Ankomst.
 
-- **Faste lead time 1 dag:** Baseline tapt 714.9 ± 49.7, binding 1.9 ± 0.1. Variant +1 tapt 507.0 ± 42.6, binding 2.7 ± 0.1.
-- **Faste lead time 2 dager:** Baseline tapt 828.6 ± 44.4, binding 2.5 ± 0.1. Variant +1 tapt 637.6 ± 46.6, binding 3.4 ± 0.1.
-- **Faste lead time 3 dager:** Baseline tapt 894.8 ± 49.3, binding 2.8 ± 0.1. Variant +1 tapt 715.7 ± 43.0, binding 3.7 ± 0.2.
-- **Faste lead time 4 dager:** Baseline tapt 936.1 ± 50.1, binding 3.3 ± 0.2. Variant +1 tapt 778.1 ± 44.7, binding 4.4 ± 0.2.
+- **Faste ledetid 1 dag:** Baseline tapt 714.9 ± 49.7, binding 1.9 ± 0.1. Variant +1 tapt 507.0 ± 42.6, binding 2.7 ± 0.1.
+- **Faste ledetid 2 dager:** Baseline tapt 828.6 ± 44.4, binding 2.5 ± 0.1. Variant +1 tapt 637.6 ± 46.6, binding 3.4 ± 0.1.
+- **Faste ledetid 3 dager:** Baseline tapt 894.8 ± 49.3, binding 2.8 ± 0.1. Variant +1 tapt 715.7 ± 43.0, binding 3.7 ± 0.2.
+- **Faste ledetid 4 dager:** Baseline tapt 936.1 ± 50.1, binding 3.3 ± 0.2. Variant +1 tapt 778.1 ± 44.7, binding 4.4 ± 0.2.
 
-Disse resultatene understøtter hovedfunnet om at både lead time og sikkerhetslager er kritiske drivere for tilgjengelighet. De operasjonelle årsakene bak variable lead times inkluderer tid på dagen for ankomst, ukedag, sesongpress, bemanning og utpakkingstid.
+Disse resultatene understøtter hovedfunnet om at både ledetid og sikkerhetslager er kritiske drivere for tilgjengelighet. De operasjonelle årsakene bak variable ledetider inkluderer tid på dagen for ankomst, ukedag, sesongpress, bemanning og utpakkingstid.
 
 #### Detaljerte resultater per produkt
 
@@ -161,7 +161,7 @@ Disse resultatene understøtter hovedfunnet om at både lead time og sikkerhetsl
 | Leppestift | 21.1 | 22.2 | 3.3 | 96 | 352 |
 | Leppepomade | 11.1 | 16.7 | 3.4 | 72 | 337 |
 
-##### Variant A (+1 til min og maks)
+##### Variant A (+1 til min–maks-nivåene)
 | Produkt | Tom% | Lav% | Binding | Tapt | Etterspørsel |
 |---------|------|------|---------|------|--------------|
 | Maskara | 11.1 | 16.7 | 3.5 | 105 | 408 |
@@ -172,7 +172,7 @@ Disse resultatene understøtter hovedfunnet om at både lead time og sikkerhetsl
 | Leppestift | 12.2 | 14.4 | 3.4 | 83 | 352 |
 | Leppepomade | 10.0 | 13.3 | 5.1 | 62 | 337 |
 
-##### Variant B (+2 til min og maks)
+##### Variant B (+2 til min–maks-nivåene)
 | Produkt | Tom% | Lav% | Binding | Tapt | Etterspørsel |
 |---------|------|------|---------|------|--------------|
 | Maskara | 5.6 | 8.9 | 6.7 | 94 | 408 |
@@ -188,19 +188,25 @@ Disse resultatene understøtter hovedfunnet om at både lead time og sikkerhetsl
 ### Teoretisk tolkning
 Den empiriske analysen bekrefter flere sentrale poenger fra inventory theory. EOQ-fundamentet (Harris, 1913) legger vekt på kostnadsbalanse mellom ordre- og lagerhold, men i et retail-miljø med begrenset plass blir service level og kundetilgjengelighet ofte viktigere enn lavest mulig binding (Axsäter, 2015; Zipkin, 2000). Resultatene fra Variant A og Variant B illustrerer denne grunnleggende trade-off-en mellom tilgjengelighet og lagerkostnad.
 
-Økningen i min-/maks-nivåer reduserer tom-hylle-rate og lav-hylle-rate, noe som er konsistent med Safety Stock-teori (Silver *et al.*, 2017). På samme måte viser funnene at produkter med særlig lave baseline-beholdninger (parfyme og eyeliner) har størst gevinst ved økt policynivå, noe som stemmer med Ciancimino & Lagana (2015) sin analyse av sensitivitet for lav-lagerprodukter.
+Økningen i min–maks-nivåer reduserer tom-hylle-rate og lav-hylle-rate, noe som er konsistent med Safety Stock-teori (Silver *et al.*, 2017). På samme måte viser funnene at produkter med særlig lave baseline-beholdninger (parfyme og eyeliner) har størst gevinst ved økt policynivå, noe som stemmer med Ciancimino & Lagana (2015) sin analyse av sensitivitet for lav-lagerprodukter.
 
 ### Resultatdiskusjon
-Analysen viser tydelige forbedringer i tilgjengelighet ved moderate økninger i min- og maks-nivå. Variant A reduserer tapt etterspørsel med 8.8 prosentpoeng (34.4 % → 25.6 %) samtidig som gjennomsnittlig lagerbinding øker fra 2.7 til 3.8. Dette gir et bedre forhold mellom service level og kapitalbinding enn en mer aggressiv økning til Variant B, som gir marginale forbedringer i tilgjengelighet med betydelig høyere binding.
+Analysen viser tydelige forbedringer i tilgjengelighet ved moderate økninger i min–maks-nivåer. Variant A reduserer tapt etterspørsel med 8.8 prosentpoeng (34.4 % → 25.6 %) samtidig som gjennomsnittlig lagerbinding øker fra 2.7 til 3.8. Variant B øker bindingen ytterligere til 4.8.
 
-Faste lead time-scenarier understreker at ledetid er en viktig operasjonell driver. Effektiv lead time på 1 dag gir klart lavere tapt etterspørsel og lavere binding enn 3–4 dagers ledetid. For TRN Ankomst er ikke bare bestillingspolicy viktig; tiden fra ankomst til salgsklart (hylleparatitet) er også en kritisk styringsvariabel. Operasjonelle forhold som ukedag, tidspunkt for mottak, sesong og utpakking/bemanning påvirker denne effektive ledetiden.
+Uten konkrete lagerkostnadssatser brukes prosentvis endring i gjennomsnittlig lagerbinding som en kostnadsproxy. Sammenlignet med baseline øker Variant A bindingen med omtrent 41 %, mens Variant B øker bindingen med omtrent 78 %.
+
+Som et enkelt tillegg kan man tenke seg en antatt enhetskostnad for lagring per produkt og dag. Da vil denne prosentvise økningen gi en direkte, om enn grov, kostnadsindikasjon som kan brukes i diskusjonen uten å kreve faktiske regnskapstall.
+
+Dette gir et bedre forhold mellom service level og kapitalbinding for Variant A enn for en mer aggressiv økning til Variant B, som gir marginale forbedringer i tilgjengelighet med betydelig høyere binding.
+
+Faste ledetid-scenarier understreker at ledetid er en viktig operasjonell driver. Effektiv ledetid på 1 dag gir klart lavere tapt etterspørsel og lavere binding enn 3–4 dagers ledetid. For TRN Ankomst er ikke bare bestillingspolicy viktig; tiden fra ankomst til salgsklart (hylleparatitet) er en kritisk styringsvariabel som påvirkes av ukedag, tidspunkt for mottak, sesong og utpakking/bemanning.
 
 ### Praktiske implikasjoner
 - Redusert tom-hylle-rate kan direkte forbedre kundetilfredshet og kjøpssjanser.
 - Lavere lav-hylle-rate gir bedre driftssikkerhet for kampanjer og salgsfremmende tiltak.
-- Kortere effektiv lead time har høy verdi, særlig når leveringskalenderen er begrenset av faste mottaksdager.
+- Kortere effektiv ledetid har høy verdi, særlig når leveringskalenderen er begrenset av faste mottaksdager.
 
-Dette indikerer at en helhetlig forbedring bør omfatte både justering av min-/maks-policyer og tiltak for å redusere tiden fra mottak til hyllesett.
+Dette indikerer at en helhetlig forbedring bør omfatte både justering av min–maks-policyer og tiltak for å redusere tiden fra mottak til salgsklart.
 
 ### Metodiske vurderinger
 Simuleringen er bevisst holdt oversiktlig for å balansere transparens og praktisk relevans. Bruken av Poisson-fordeling for daglig etterspørsel er faglig begrunnet for relativt lave og uavhengige salgsarrangementer, og 30 repeterte simuleringer per scenario gir robusthet mot tilfeldige variasjoner.
@@ -212,28 +218,32 @@ Samtidig innebærer modellens enkelhet noen svakheter. Modellen har ikke eksplis
 - **Sesong og kampanjer:** Kampanjedager er delvis modellert, men helårsperspektivet mangler ekstreme perioder som sommerferie og julehandel.
 - **Demand censoring:** Tapte etterspørselsberegninger antar at etterspørsel som ikke tilfredsstilles, representerer direkte tap. I praksis kan kunder velge alternative varer eller utsette kjøp.
 - **Overførbarhet:** Funnene er mest direkte anvendelige i lignende flyplass- og terminalmiljøer med begrenset plass og faste mottaksdager.
+- **Offentlige trafikkdata som eksempel:** Et konkret eksempel på videre forskning er å koble min–maks-anbefalingene til offentlig tilgjengelige reisetall, for eksempel SSB eller Avinor. Selv en enkel anslagsvis kobling mellom passasjervolum og sannsynligheten for gjensalg i terminalen kan gi mer operasjonell kontekst og gjøre anbefalingene mer relevante uten å kreve detaljert bedriftsdata.
 
-Videre forskning kan med fordel utforske dynamiske min-/maks-policyer basert på prognoser, multi-produkt optimering med plassbegrensning, og mer avanserte modeller for kundeadferd ved tomme hyller.
+Videre forskning kan med fordel utforske dynamiske min–maks-policyer basert på prognoser, multi-produkt optimering med plassbegrensning, og mer avanserte modeller for kundeadferd ved tomme hyller.
 
 ## Konklusjon og anbefalinger
 
 ### Svar på problemstillingen
-Ja. Analysen viser at en moderat økning i min og maks gir lavere tom-hylle-rate og lav-hylle-rate med en akseptabel økning i lagerbinding. **Variant A (+1 til min og maks)** fremstår som det mest robuste alternativet fordi den gir betydelig tilgjengelighetsgevinst uten uforholdsmessig økt lagerbinding.
+Ja. Analysen viser at en moderat økning i min–maks-nivå gir lavere tom-hylle-rate og lav-hylle-rate med en akseptabel økning i lagerbinding. **Variant A (+1 til min–maks-nivåene)** fremstår som det mest robuste alternativet fordi den gir betydelig tilgjengelighetsgevinst uten uforholdsmessig økt lagerbinding.
+På bakgrunn av disse funnene anbefales implementering av Variant A som første tiltak, kombinert med overvåking av KPI-er for å validere effekten i drift.
 
 ### Hovedfunn
-Daglig min–maks-policy i baseline gir omfattende tapt etterspørsel (34.4 %) på grunn av hyppige tom-hylle-perioder. En moderat løft av min-/maks-nivåene reduserer dette til 25.6 % og bør vurderes som første tiltak.
+Daglig min–maks-policy i baseline gir omfattende tapt etterspørsel (34.4 %) på grunn av hyppige tom-hylle-perioder. En moderat løft av min–maks-nivåene reduserer dette til 25.6 % og bør vurderes som første tiltak.
 
 ### Anbefalinger
-1. **Implementer Variant A** (+1 til min og maks) som første steg for de 7 produktene.
+1. **Implementer Variant A** (+1 til min–maks-nivåene) som første steg for de 7 produktene.
 2. **Overvåk KPI-er:** mål tom-hylle-rate, lav-hylle-rate og lagerbinding for å validere modellen mot faktiske data.
 3. **Vurder Variant B** for produkter med stabilt høyt volum eller ved kampanjefasede varer.
-4. **Fokuser på effektiv lead time:** tiltak som raskere utpakking og mer tilgjengelig bemanning kan gi stor effekt.
-5. **Utvikle dynamisk policy:** bruk data og prognoser til å justere min/max i perioder med høy etterspørsel.
+4. **Fokuser på effektiv ledetid:** tiltak som raskere utpakking og mer tilgjengelig bemanning kan gi stor effekt.
+5. **Utvikle dynamisk policy:** bruk data og prognoser til å justere min–maks-nivåene i perioder med høy etterspørsel.
 
 ### Bidrag og overførbarhet
 Studien viser at kvantitativ simulering kan gi nyttige beslutningsgrunnlag i retail når reelle data er begrenset. Metoden er særlig relevant for butikker med begrenset lagerplass, høyt besøksvolum og faste mottaksdager.
 
-Resultatene understreker at både min/max-policy og effektiv ledetid må vurderes parallelt for å oppnå en god tjenestenivåbalanse.
+Selv med et avgrenset produktutvalg og simulerte parametere gir analysen konkrete, relative anbefalinger som kan støtte forbedringer i TRN Ankomst. Bruken av prosentvis endring i gjennomsnittlig lagerbinding som kostnadsproxy gjør det mulig å beskrive trade-off uten tilgang til detaljerte kostnadstall.
+
+Resultatene understreker at både min–maks-policy og effektiv ledetid må vurderes parallelt for å oppnå en god tjenestenivåbalanse.
 
 ## Appendiks A: Reproduserbarhet og kjøring av simulering
 Koden som ligger i prosjektmappen kan kjøres for å gjenskape simuleringene og statistikkene som presenteres i denne rapporten. Nedenfor er korte instruksjoner for reproduksjon og en forklaring av viktige variabler.
@@ -275,6 +285,7 @@ Tempelmeier, H. (2012). *Inventory management in supply networks* (3rd ed.). Boo
 Voss, C., Tsikriktsis, N., & Frohlich, M. (2002). Case research in operations management. *International Journal of Operations & Production Management*, 22(2), 195–219. https://doi.org/10.1108/01443570210414329
 
 Zipkin, P. (2000). *Foundations of inventory management*. McGraw-Hill.
+Pettersen, I., & Rekdal, M. (2026). *LOG650 kompendium: Metode og antakelseskontroll*. Høgskolen i Molde (kompendium).
 
 ## Vedlegg
 
